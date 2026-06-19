@@ -1,0 +1,17 @@
+{
+  "name": "monorepo-dictionary",
+  "private": true,
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev:front": "turbo run dev --filter=@dictionary/front",
+    "dev:api": "turbo run dev --filter=@dictionary/api",
+    "build:front": "turbo run build --filter=@dictionary/front",
+    "build:api": "turbo run build --filter=@dictionary/api"
+  },
+  "devDependencies": {
+    "turbo": "^2"
+  }
+}
