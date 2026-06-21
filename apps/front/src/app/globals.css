@@ -1,1 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+@source "../../";
+
+@theme {
+  --color-bg: #F9D2B2;
+  --color-bg-dark: #F0C4A0;
+  --color-surface: #FDE8D5;
+  --color-surface-hover: #FBE0C8;
+  --color-input: #FFF5ED;
+  --color-border: #E8B894;
+  --color-border-strong: #D4A07A;
+  --color-text: #68150A;
+  --color-text-muted: #8B4332;
+  --color-text-light: #A86B5A;
+  --color-accent: #8B1E0F;
+  --color-accent-hover: #6E1A0D;
+  --color-accent-light: #F4C09A;
+  --color-success: #5A7A2A;
+  --color-error: #B91C1C;
+  --color-error-bg: #FDE2E2;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+button {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-light);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-overlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.35s ease-out both;
+}
+
+.animate-fade-overlay {
+  animation: fade-overlay 0.2s ease-out both;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-accent-light) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.glass-card {
+  background: rgba(253, 232, 213, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+.glass-modal {
+  background: rgba(253, 232, 213, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+}
