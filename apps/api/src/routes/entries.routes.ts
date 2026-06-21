@@ -103,11 +103,16 @@ router.get("/:word", async (req: AuthRequest, res: Response): Promise<void> => {
   }
 
   // Fetch from external API
-  const data = await fetchWordFromApi(word);
+  let data = await fetchWordFromApi(word);
 
   if (!data) {
-    res.status(404).json({ message: `Palavra "${word}" não encontrada no dicionário` });
-    return;
+    // If word is not found in the external API, create a stub so the user can still favorite it and it gets cached
+    data = [
+      {
+        word,
+        meanings: [],
+      },
+    ];
   }
 
   // Cache the result
