@@ -8,7 +8,7 @@ WORKDIR /app
 # Copy root workspace files
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml turbo.json ./
 
-# Copy api package
+# Copy api package (including utils for seed)
 COPY apps/api/ ./apps/api/
 
 # Install dependencies
@@ -27,9 +27,16 @@ COPY --from=builder /app/apps/api/dist ./dist
 COPY --from=builder /app/apps/api/package.json ./package.json
 COPY --from=builder /app/apps/api/node_modules ./node_modules
 
+# Copy utils (words_dictionary.json needed for seed)
+COPY --from=builder /app/apps/api/utils ./utils
+
+# Copy entrypoint script
+COPY apps/api/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+
 ENV NODE_ENV=production
 ENV API_PORT=3001
 
 EXPOSE 3001
 
-CMD ["node", "dist/index.js"]
+ENTRYPOINT ["./entrypoint.sh"]
