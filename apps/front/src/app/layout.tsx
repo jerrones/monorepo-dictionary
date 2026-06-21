@@ -3,8 +3,12 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "DictYOURnary",
-  description: "Seu melhor dicionário de inglês",
+  title: {
+    default: "DictYOURnary",
+    template: "%s | DictYOURnary",
+  },
+  description:
+    "Seu dicionário de inglês completo — pesquise, favorite e acompanhe seu histórico de palavras.",
 };
 
 export default function RootLayout({
@@ -14,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body>
+      <body className="font-sans antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
