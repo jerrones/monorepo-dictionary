@@ -1,20 +1,32 @@
 import { Pool } from "pg";
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+let pool: Pool | null = null;
 
-pool.on("error", (err) => {
-  console.error("Unexpected error on idle client", err);
-  process.exit(-1);
-});
+function getPool(): Pool {
+  if (!pool) {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+    });
+
+    pool.on("error", (err) => {
+      console.error("Unexpected error on idle client", err);
+      process.exit(-1);
+    });
+  }
+
+  return pool;
+}
 
 export async function query(text: string, params?: unknown[]) {
   const start = Date.now();
-  const res = await pool.query(text, params);
+  const res = await getPool().query(text, params);
   const duration = Date.now() - start;
   console.log("Executed query", { text, duration, rows: res.rowCount });
   return res;
 }
 
-export default pool;
+export default {
+  connect: () => getPool().connect(),
+  query: (text: string, params?: unknown[]) => getPool().query(text, params),
+  end: () => pool?.end(),
+};
